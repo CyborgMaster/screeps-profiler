@@ -2,6 +2,7 @@
 
 let usedOnStart = 0;
 let enabled = false;
+let hookedUp = false;
 let depth = 0;
 
 function AlreadyWrappedError() {
@@ -339,7 +340,14 @@ module.exports = {
 
   enable() {
     enabled = true;
-    hookUpPrototypes();
+    if (!hookedUp) {
+      hookUpPrototypes();
+      hookedUp = true;
+    }
+  },
+
+  disable() {
+    enabled = false;
   },
 
   output: Profiler.output,
